@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "dgSpecHash": "0xTWI3Pe1sg=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\brukb\\TmsCore\\TmsCore.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\brukb\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0\\microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
+    "C:\\Users\\brukb\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\brukb\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512",
+    "C:\\Users\\brukb\\.nuget\\packages\\swashbuckle.aspnetcore\\7.0.0\\swashbuckle.aspnetcore.7.0.0.nupkg.sha512",
+    "C:\\Users\\brukb\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\7.0.0\\swashbuckle.aspnetcore.swagger.7.0.0.nupkg.sha512",
+    "C:\\Users\\brukb\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\7.0.0\\swashbuckle.aspnetcore.swaggergen.7.0.0.nupkg.sha512",
+    "C:\\Users\\brukb\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\7.0.0\\swashbuckle.aspnetcore.swaggerui.7.0.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "message": "TmsCore depends on Swashbuckle.AspNetCore (>= 6.10.0) but Swashbuckle.AspNetCore 6.10.0 was not found. Swashbuckle.AspNetCore 7.0.0 was resolved instead.",
+      "projectPath": "C:\\Users\\brukb\\TmsCore\\TmsCore.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\brukb\\TmsCore\\TmsCore.csproj",
+      "libraryId": "Swashbuckle.AspNetCore",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}

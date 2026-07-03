@@ -1,0 +1,26 @@
+### Create a new enrollment
+POST https://localhost:5001/api/enrollments
+Content-Type: application/json
+
+{
+  "studentId": "S001",
+  "courseCode": "CS-101"
+}
+
+### Get all enrollments
+GET https://localhost:5001/api/enrollments
+
+### Get an enrollment by ID
+GET https://localhost:5001/api/enrollments/{{enrollmentId}}
+
+### Delete an enrollment
+DELETE https://localhost:5001/api/enrollments/{{enrollmentId}}
+
+### Example response for POST /api/enrollments
+# Expected response body
+{
+  "id": "a1b2c3d4",
+  "studentId": "S001",
+  "courseCode": "CS-101",
+  "enrolledAt": "2026-06-25T12:34:56Z"
+}
