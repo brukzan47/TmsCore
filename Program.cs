@@ -1,89 +1,105 @@
 ﻿using TmsCore.Models;
+using TmsCore.Services;
 
-Console.WriteLine("========== LAB SESSION 1 ==========");
+Console.WriteLine("========== LAB SESSION 2 ==========");
 
-// Exercise 1: Null safety
-string? region = null;
+var service = new EnrollmentService();
 
-string? upperRegion = region?.ToUpper();
-Console.WriteLine($"Region conditional: {upperRegion}");
-
-string displayRegion = region ?? "Unassigned";
-Console.WriteLine($"Region coalesced: {displayRegion}");
-
-region ??= "Addis Ababa";
-Console.WriteLine($"Region assigned: {region}");
-
-// Exercise 2: Decimal for money
-string studentName = "Abeba";
-string studentId = "STU-001";
-int enrollmentCount = 3;
-decimal grantAmount = 1999.99m;
-DateTime enrolledAt = DateTime.UtcNow;
-string? campusRegion = null;
-
-Console.WriteLine($"\nStudent: {studentName} ({studentId})");
-Console.WriteLine($"Courses: {enrollmentCount}");
-Console.WriteLine($"Grant: {grantAmount:F2}");
-Console.WriteLine($"Enrolled: {enrolledAt:yyyy-MM-dd}");
-Console.WriteLine($"Campus: {campusRegion ?? "Not assigned"}");
-
-decimal grantPerStudent = 1999.99m;
-decimal totalAllocation = grantPerStudent * 100_000m;
-
-Console.WriteLine($"\nTotal allocated: {totalAllocation:F2}");
-
-// Exercise 3: Immutable record
-var enrollment = new EnrollmentRecord(
-    "STU-001",
-    "CS-401",
-    DateTime.UtcNow
-);
-
-Console.WriteLine($"\nOriginal record: {enrollment}");
-
-var corrected = enrollment with
+var validStudent = new Student
 {
-    CourseCode = "CS-402"
+    Id = "S1",
+    Name = "Abeba",
+    Age = 20,
+    GPA = 3.8m
 };
 
-Console.WriteLine($"Corrected record: {corrected}");
-
-var duplicate = new EnrollmentRecord(
-    "STU-001",
-    "CS-401",
-    enrollment.EnrolledAt
-);
-
-Console.WriteLine($"Same data? {enrollment == duplicate}");
-
-// Course validation
-var course = new Course
+var validCourse = new Course
 {
     Code = "CS-401",
     Title = "Advanced C#",
     Capacity = 30
 };
 
-Console.WriteLine($"\nCourse: {course.Title}");
-Console.WriteLine($"Capacity: {course.Capacity}");
+// Valid registration
+var result = service.ProcessRegistration(validStudent, validCourse);
+
+Console.WriteLine(
+    $"Enrolled: {result.StudentId} in {result.CourseCode}"
+);
+
+// Null guard clause test
+try
+{
+    service.ProcessRegistration(null, validCourse);
+}
+catch (ArgumentNullException ex)
+{
+    Console.WriteLine($"Guard caught: {ex.ParamName}");
+}
+
+// Full course test
+var fullCourse = new Course
+{
+    Code = "CS-402",
+    Title = "Full Course",
+    Capacity = 1,
+    EnrolledCount = 1
+};
 
 try
 {
-    course.Capacity = -5;
+    service.ProcessRegistration(validStudent, fullCourse);
 }
-catch (ArgumentOutOfRangeException ex)
+catch (InvalidOperationException ex)
 {
-    Console.WriteLine($"Invalid capacity caught: {ex.Message}");
+    Console.WriteLine($"Business rule: {ex.Message}");
 }
 
-try
+// LINQ student data
+List<Student> students =
+[
+    new Student { Id = "S1", Name = "Abeba", Age = 22, GPA = 3.8m },
+    new Student { Id = "S2", Name = "Kidane", Age = 21, GPA = 2.4m },
+    new Student { Id = "S3", Name = "Dawit", Age = 20, GPA = 3.1m },
+    new Student { Id = "S4", Name = "Sara", Age = 23, GPA = 3.9m },
+    new Student { Id = "S5", Name = "Frehiwot", Age = 19, GPA = 2.0m },
+    new Student { Id = "S6", Name = "Yonas", Age = 24, GPA = 3.5m },
+    new Student { Id = "S7", Name = "Meron", Age = 22, GPA = 1.8m },
+    new Student { Id = "S8", Name = "Tesfaye", Age = 21, GPA = 2.9m }
+];
+
+// Honors leaderboard
+var leaderboard = students
+    .Where(student => student.GPA >= 3.5m)
+    .OrderByDescending(student => student.GPA)
+    .Select(student => student.Name)
+    .ToList();
+
+Console.WriteLine($"\nFound {leaderboard.Count} Honors Students:");
+
+foreach (var name in leaderboard)
 {
-    course.Title = "";
-}
-catch (ArgumentException ex)
-{
-    Console.WriteLine($"Invalid title caught: {ex.Message}");
+    Console.WriteLine($"- {name}");
 }
 
-Console.WriteLine("\n========== SESSION 1 COMPLETED ==========");
+// Average GPA
+decimal averageGpa = students.Average(student => student.GPA);
+
+Console.WriteLine($"\nClass Average GPA: {averageGpa:F2}");
+
+// Group students by standing
+var standingGroups = students.GroupBy(student => student.Standing);
+
+Console.WriteLine("\nStudents by Standing:");
+
+foreach (var group in standingGroups)
+{
+    Console.WriteLine($"\n{group.Key}:");
+
+    foreach (var student in group.OrderByDescending(student => student.GPA))
+    {
+        Console.WriteLine($"- {student.Name}: {student.GPA}");
+    }
+}
+
+Console.WriteLine("\n========== SESSION 2 COMPLETED ==========");
